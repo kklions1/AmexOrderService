@@ -11,14 +11,22 @@ class OrderServiceController {
     @GetMapping("/")
     fun getCost(items: Array<String>): Double {
         var totalCost = 0.0
+        var orangeCount = 0
+        var appleCount = 0
 
         items.forEach{
-            when (it.lowercase()) {
+            when (it.lowercase()) { // lowercase() used to account for the user using weird inputs like "ApPlE" or "oRANgE"
                 "orange" -> {
-                    totalCost += orangeCost
+                    orangeCount++
+                    if (orangeCount % 3 != 0) {
+                        totalCost += orangeCost
+                    }
                 }
                 "apple" -> {
-                    totalCost += appleCost
+                    appleCount++
+                    if (appleCount % 2 != 0) {
+                        totalCost += appleCost
+                    }
                 }
             }
         }
