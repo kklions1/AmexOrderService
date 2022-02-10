@@ -8,8 +8,10 @@ class OrderServiceController {
     private val orangeCost = .25
     private val appleCost = .6
 
-    @GetMapping("/")
-    fun getCost(items: Array<String>): Double {
+    private val orderHistory: List<Order> = listOf()
+
+    @GetMapping("/placeOrder")
+    fun placeOrder(items: Array<String>): Order {
         var totalCost = 0.0
         var orangeCount = 0
         var appleCount = 0
@@ -31,7 +33,12 @@ class OrderServiceController {
             }
         }
 
-        return totalCost
+
+
+        return Order(orderHistory.size + 1,
+                orangeCount,
+                appleCount,
+                totalCost)
     }
 
 
