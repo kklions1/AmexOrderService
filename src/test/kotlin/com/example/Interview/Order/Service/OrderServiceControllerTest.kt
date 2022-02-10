@@ -42,4 +42,26 @@ class OrderServiceControllerTest {
         assertEquals(.5, result.totalCost)
     }
 
+    @Test
+    fun getOrderHistoryGetsAllOrdersPlaced() {
+        orderServiceController.placeOrder(arrayOf("apple"))
+        orderServiceController.placeOrder(arrayOf("orange"))
+        orderServiceController.placeOrder(arrayOf("apple"))
+
+        val result = orderServiceController.getOrderHistory()
+        assert(result.size == 3)
+    }
+
+
+    @Test
+    fun getOrderByNumberGetsCorrectOrder() {
+        orderServiceController.placeOrder(arrayOf("apple"))
+        orderServiceController.placeOrder(arrayOf("orange"))
+        orderServiceController.placeOrder(arrayOf("apple"))
+
+        val result = orderServiceController.getOrderByNumber(2)
+        assert(result.id == 2)
+        assert(result.orangeCount == 1)
+        assert(result.appleCount == 0)
+    }
 }

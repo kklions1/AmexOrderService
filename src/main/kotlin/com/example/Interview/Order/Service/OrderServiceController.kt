@@ -8,7 +8,7 @@ class OrderServiceController {
     private val orangeCost = .25
     private val appleCost = .6
 
-    private val orderHistory: List<Order> = listOf()
+    private val orderHistory: MutableList<Order> = mutableListOf()
 
     @GetMapping("/placeOrder")
     fun placeOrder(items: Array<String>): Order {
@@ -33,13 +33,23 @@ class OrderServiceController {
             }
         }
 
-
-
-        return Order(orderHistory.size + 1,
+        val order = Order(orderHistory.size + 1,
                 orangeCount,
                 appleCount,
                 totalCost)
+
+        orderHistory.add(order)
+
+        return order
     }
 
+    @GetMapping("/getOrderHistory")
+    fun getOrderHistory(): List<Order> {
+        return orderHistory
+    }
 
+    @GetMapping("/getOrderByNumber")
+    fun getOrderByNumber(orderNumber: Int): Order {
+        return orderHistory[orderNumber - 1]
+    }
 }
